@@ -94,4 +94,5 @@ configure_file(libsocketConfigVersion.cmake.in
   "${PROJECT_BINARY_DIR}/libsocketConfigVersion.cmake" @ONLY)
 
 
-  add_subdirectory(examples++)
+add_subdirectory(examples++)
+add_subdirectory(frame_stream)
