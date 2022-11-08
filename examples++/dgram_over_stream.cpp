@@ -6,10 +6,15 @@
 #include <string>
 #include <vector>
 
-#include <libsocket/dgramoverstream.hpp>
-#include <libsocket/exception.hpp>
-#include <libsocket/inetclientstream.hpp>
-#include <libsocket/inetserverstream.hpp>
+// #include <libsocket/dgramoverstream.hpp>
+// #include <libsocket/exception.hpp>
+// #include <libsocket/inetclientstream.hpp>
+// #include <libsocket/inetserverstream.hpp>
+
+#include <dgramoverstream.hpp>
+#include <exception.hpp>
+#include <inetclientstream.hpp>
+#include <inetserverstream.hpp>
 
 /*
  * This example demonstrates the use of the dgram_over_stream class. As you can
@@ -47,26 +52,6 @@ MODE get_mode(char** argv) {
         perror("Bad command line; please use either -s or -c");
         exit(1);
     }
-}
-
-int main(int argc, char** argv) {
-    assert(argc > 1);
-
-    MODE mode = get_mode(argv);
-
-    try {
-        if (mode == MODE_CLIENT) {
-            run_client();
-            run_string_client();
-            run_vec_client();
-        } else if (mode == MODE_SERVER) {
-            run_server();
-        }
-    } catch (libsocket::socket_exception e) {
-        std::cerr << e.mesg << std::endl;
-    }
-
-    return 0;
 }
 
 void run_client(void) {
@@ -140,3 +125,30 @@ void run_server(void) {
 
     return;
 }
+
+
+
+int main(int argc, char** argv) {
+    if(argc < 2)
+    {
+        printf("Usage: \r\nApp -s or App -c\r\n");
+        exit(-1);
+    }
+
+    MODE mode = get_mode(argv);
+
+    try {
+        if (mode == MODE_CLIENT) {
+            run_client();
+            run_string_client();
+            run_vec_client();
+        } else if (mode == MODE_SERVER) {
+            run_server();
+        }
+    } catch (libsocket::socket_exception e) {
+        std::cerr << e.mesg << std::endl;
+    }
+
+    return 0;
+}
+
