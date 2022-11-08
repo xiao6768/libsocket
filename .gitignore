@@ -7,3 +7,4 @@ srv
 *.a
 *.kdev4
 headers/conf.h
+build/

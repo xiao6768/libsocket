@@ -28,6 +28,7 @@ INCLUDE_DIRECTORIES(BEFORE ${CMAKE_CURRENT_BINARY_DIR}/headers/ ${CMAKE_CURRENT_
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 ADD_DEFINITIONS(-Wall -Wextra)
 
+
 IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     SET(CMAKE_INSTALL_PREFIX "/usr")
 ENDIF()
@@ -92,3 +93,5 @@ configure_file(libsocketConfig.cmake.in
 configure_file(libsocketConfigVersion.cmake.in
   "${PROJECT_BINARY_DIR}/libsocketConfigVersion.cmake" @ONLY)
 
+
+  add_subdirectory(examples++)
