@@ -30,7 +30,8 @@
 
 using std::string;
 
-static const string HOST = "localhost";
+static const string HOST = "192.168.188.1";
+// static const string HOST = "localhost";
 static const string PORT = "4445";
 
 void run_client(void);
@@ -122,7 +123,9 @@ void run_server(void) {
         std::cout << "Server received " << (len = dgram_cl.rcvmsg(buf, bufsize, para))
                   << " bytes.\n";
         std::cout << buf << std::endl;
-        dgram_cl.sndmsg("Hello back", 10);
+        std::string buf_str(buf);
+        std::string bounce_back_str = buf_str + " back";
+        dgram_cl.sndmsg(bounce_back_str.c_str(), bounce_back_str.size());
 
         memset(buf, 0, len);
     }
@@ -133,25 +136,34 @@ void run_server(void) {
 
 
 int main(int argc, char** argv) {
-    if(argc < 2)
-    {
-        printf("Usage: \r\nApp -s or App -c\r\n");
-        exit(-1);
-    }
+    
+    libsocket::inet_stream client(HOST, PORT, LIBSOCKET_IPv4);
+    libsocket_holometer_v3::dgram_over_stream_holometer_v3 dgram_cl(std::move(client));
+    const char* topic = "Hello_topic";
+    const char* payload = "Hi,Iampayload^_^";
+    dgram_cl.sndmsg(topic, strlen(topic), libsocket_holometer_v3::dgram_over_stream_holometer_v3::EProcessType::SOC,
+        libsocket_holometer_v3::dgram_over_stream_holometer_v3::EPayloadType::TOPIC);
+    dgram_cl.sndmsg(payload, strlen(payload), libsocket_holometer_v3::dgram_over_stream_holometer_v3::EProcessType::SOC,
+        libsocket_holometer_v3::dgram_over_stream_holometer_v3::EPayloadType::SERIAL_DATA);       
+    // if(argc < 2)
+    // {
+    //     printf("Usage: \r\nApp -s or App -c\r\n");
+    //     exit(-1);
+    // }
 
-    MODE mode = get_mode(argv);
+    // MODE mode = get_mode(argv);
 
-    try {
-        if (mode == MODE_CLIENT) {
-            run_client();
-            run_string_client();
-            run_vec_client();
-        } else if (mode == MODE_SERVER) {
-            run_server();
-        }
-    } catch (libsocket::socket_exception e) {
-        std::cerr << e.mesg << std::endl;
-    }
+    // try {
+    //     if (mode == MODE_CLIENT) {
+    //         run_client();
+    //         run_string_client();
+    //         run_vec_client();
+    //     } else if (mode == MODE_SERVER) {
+    //         run_server();
+    //     }
+    // } catch (libsocket::socket_exception e) {
+    //     std::cerr << e.mesg << std::endl;
+    // }
 
     return 0;
 }
