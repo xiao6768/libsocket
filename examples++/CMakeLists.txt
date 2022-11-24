@@ -3,6 +3,9 @@
 add_executable( dgram_over_stream dgram_over_stream.cpp)
 target_link_libraries(dgram_over_stream socket++)
 
+add_executable( dgram_over_stream_holometer_v3 dgram_over_stream_holometer_v3.cpp)
+target_link_libraries(dgram_over_stream_holometer_v3 socket++)
+
 add_executable( framing framing.cpp)
 target_link_libraries(framing socket++)
 

@@ -22,6 +22,7 @@ SET(headers
 ./inetdgram.hpp
 ./dgramoverstream.hpp
 ./framing.hpp
+./dgramoverstream_holometer_v3.hpp
 )
 
 IF(IS_LINUX)
