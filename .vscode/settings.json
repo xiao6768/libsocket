@@ -2,6 +2,7 @@
     "files.associations": {
         "atomic": "c",
         "cstdint": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "functional": "cpp"
     }
 }

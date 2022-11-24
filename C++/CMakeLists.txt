@@ -7,6 +7,7 @@ ADD_DEFINITIONS("-DMIXED")
 SET(sources
 dgramclient.cpp
 dgramoverstream.cpp
+dgramoverstream_holometer_v3.cpp
 framing.cpp
 inetbase.cpp
 inetclientstream.cpp

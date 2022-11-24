@@ -34,6 +34,8 @@ int frame_snd_w_topic(const void* topic_buf, int topic_len,
 {
     frame_sndmsg(topic_buf, topic_len);
     frame_sndmsg(payload_buf, payload_len);
+
+    return 0;
 }
 
 
@@ -76,7 +78,7 @@ int receive_bytes(int n) {
 
 int frame_rcvmsg(void* dst, int len)
 {
-    my_uint32_t expected = receive_header();
+    int expected = receive_header();
 
     int to_receive = len < expected ? len : expected;
     int received = 0;

@@ -23,12 +23,14 @@ IoFuncTable funcs;
 
 int snd(const void* buf, int len, int flags)
 {
+    (void)flags;
     printf("call snd with len = %d\r\n", len);
     return write(sfd, buf, len);
 }
 
 int rcv(void* buf, int len, int flags)
 {
+    (void)flags;
     return read(sfd, buf, len);
 }
 
@@ -38,6 +40,9 @@ char my_buff[100];
 
 int main(int argc, char** arv)
 {
+    (void)argc;
+    (void)arv;
+
     int ret = sfd = create_inet_stream_socket(ip, port, LIBSOCKET_IPv4, 0);
     if (ret < 0) {
         perror(0);
