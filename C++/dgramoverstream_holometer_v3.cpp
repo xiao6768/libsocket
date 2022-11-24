@@ -53,10 +53,11 @@ void dgram_over_stream_holometer_v3::encode_uint32_holometer_v3(uint32_t n, char
                 false);
     }
     n &= VALID_SIZE_MASK; // only low 16bit is avalible
-    n |= ((process_type) & 0x1) << PROCESS_TYPE_BIT;
-    n |= ((payload_type) & 0x1) << PAYLOAD_TYPE_BIT;
-    for (int i = 3; i >= 0; i--) {
-        dst[i] = n >> (8 * (3 - i));
+    n |= (((u_char)process_type) & 0x1) << PROCESS_TYPE_BIT;
+    n |= (((u_char)payload_type) & 0x1) << PAYLOAD_TYPE_BIT;
+
+    for (int i = 0; i <= 3; ++i) {
+        dst[i] = (n >> (8 * i))& 0xFF;
     }
 }
 
@@ -66,9 +67,8 @@ uint32_t dgram_over_stream_holometer_v3::decode_uint32_holometer_v3(const char* 
     // We store unsigned numbers in signed chars; convert, otherwise the MSB
     // being set would be interpreted as sign and taken over to uint32_t's MSB.
     const unsigned char* src_ = (const unsigned char*)src;
-
-    for (int i = 3; i >= 0; i--) {
-        result |= uint32_t(src_[i]) << (8 * (3 - i));
+    for (int i = 0; i <= 3; ++i) {
+        result |= (src_[i] & 0xFF) >> (8 * i);
     }
 
     header_para.process_type = (EProcessType)((result >> PROCESS_TYPE_BIT) & 0x1);
